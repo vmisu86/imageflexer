@@ -1,0 +1,39 @@
+<nz-sider class="app-sidebar" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+
+    <div class="sidebar-logo">
+        <a [routerLink]="['/']">
+            <img src="assets/images/logo.svg" alt="ImageFlexer">
+            <span *ngIf="!isCollapsed">ImageFlexer</span>
+        </a>
+    </div>
+
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li nz-menu-item [routerLink]="['/']" routerLinkActive="ant-menu-item-selected"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span nz-icon nzType="home" nzTheme="outline"></span>
+            <span>Home</span>
+        </li>
+
+        <li nz-menu-item [routerLink]="['/converter']" routerLinkActive="ant-menu-item-selected">
+            <span nz-icon nzType="swap" nzTheme="outline"></span>
+            <span>Converter</span>
+        </li>
+
+        <li nz-menu-item [routerLink]="['/resizer']" routerLinkActive="ant-menu-item-selected">
+            <span nz-icon nzType="column-width" nzTheme="outline"></span>
+            <span>Resizer</span>
+        </li>
+
+        <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected">
+            <span nz-icon nzType="appstore" nzTheme="outline"></span>
+            <span>Batch Processor</span>
+        </li>
+
+        <li nz-menu-divider></li>
+
+        <li nz-menu-item (click)="toggleCollapsed()">
+            <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" nzTheme="outline"></span>
+            <span>Toggle Sidebar</span>
+        </li>
+    </ul>
+</nz-sider>

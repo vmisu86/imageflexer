@@ -1,0 +1,181 @@
+// Import variables
+@import "../variables.less";
+
+// Dark theme variables
+// Based on Ant Design's dark theme variables
+.dark-theme {
+    --primary-color: #1890ff;
+    --success-color: #52c41a;
+    --warning-color: #faad14;
+    --error-color: #f5222d;
+    --heading-color: rgba(255, 255, 255, 0.85);
+    --text-color: rgba(255, 255, 255, 0.65);
+    --text-color-secondary: rgba(255, 255, 255, 0.45);
+    --background-color: #22272e;
+    --component-background: #2d333b;
+    --border-color-base: #434a50;
+    --border-color-split: #434a50;
+    --shadow-color: rgba(0, 0, 0, 0.45);
+
+    // Override Ant Design component styles
+    .ant-layout {
+        background-color: var(--background-color);
+    }
+
+    .ant-layout-header {
+        background-color: #22272e;
+    }
+
+    .ant-layout-footer {
+        background-color: #22272e;
+    }
+
+    .ant-card {
+        background-color: var(--component-background);
+        border-color: var(--border-color-base);
+    }
+
+    .ant-input,
+    .ant-input-number,
+    .ant-select-selector {
+        background-color: #3a3f47 !important;
+        border-color: var(--border-color-base) !important;
+        color: var(--text-color) !important;
+    }
+
+    .ant-input-number-handler-wrap {
+        background-color: #3a3f47 !important;
+    }
+
+    .ant-select-dropdown {
+        background-color: #3a3f47 !important;
+    }
+
+    .ant-select-item {
+        color: var(--text-color) !important;
+    }
+
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+        background-color: rgba(24, 144, 255, 0.2) !important;
+    }
+
+    .ant-checkbox-wrapper {
+        color: var(--text-color) !important;
+    }
+
+    .ant-slider-rail {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .ant-slider-track {
+        background-color: var(--primary-color) !important;
+    }
+
+    .ant-slider-handle {
+        border-color: var(--primary-color) !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--heading-color) !important;
+    }
+
+    p,
+    span,
+    div {
+        color: var(--text-color);
+    }
+
+    .ant-divider {
+        background-color: var(--border-color-split) !important;
+    }
+
+    .ant-modal-content,
+    .ant-modal-header {
+        background-color: var(--component-background) !important;
+        border-color: var(--border-color-base) !important;
+    }
+
+    .ant-modal-title,
+    .ant-modal-close {
+        color: var(--heading-color) !important;
+    }
+
+    .ant-drawer-content {
+        background-color: var(--component-background) !important;
+    }
+
+    .ant-drawer-header {
+        background-color: var(--component-background) !important;
+        border-color: var(--border-color-base) !important;
+    }
+
+    .ant-drawer-title {
+        color: var(--heading-color) !important;
+    }
+
+    .ant-tabs-nav {
+        color: var(--text-color) !important;
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: var(--primary-color) !important;
+    }
+
+    .ant-radio-button-wrapper {
+        background-color: var(--component-background) !important;
+        border-color: var(--border-color-base) !important;
+        color: var(--text-color) !important;
+    }
+
+    .ant-descriptions {
+        background-color: var(--component-background) !important;
+    }
+
+    .ant-descriptions-item-label,
+    .ant-descriptions-item-content {
+        color: var(--text-color) !important;
+        border-color: var(--border-color-base) !important;
+    }
+
+    .ant-progress-text {
+        color: var(--text-color) !important;
+    }
+
+    // Custom component overrides for dark theme
+    .file-dropzone {
+        background-color: rgba(0, 0, 0, 0.05) !important;
+        border-color: var(--border-color-base) !important;
+    }
+
+    .file-dropzone.active {
+        background-color: rgba(24, 144, 255, 0.1) !important;
+        border-color: var(--primary-color) !important;
+    }
+
+    .preview-container {
+        background-color: #252a30 !important;
+    }
+
+    .image-container {
+        background-color: #252a30 !important;
+    }
+
+    .image-card {
+        background-color: var(--component-background) !important;
+        border-color: var(--border-color-base) !important;
+    }
+
+    .operation-group {
+        background-color: rgba(0, 0, 0, 0.05) !important;
+        border-color: var(--border-color-base) !important;
+    }
+
+    .inner-content {
+        background-color: var(--component-background) !important;
+    }
+}

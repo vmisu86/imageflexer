@@ -1,0 +1,33 @@
+@import '../assets/styles/variables.less';
+
+.app-layout {
+    min-height: 100vh;
+}
+
+.main-layout {
+    margin-top: 64px;
+}
+
+.app-content {
+    padding: 24px;
+}
+
+.inner-content {
+    background: @component-background;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .app-content {
+        padding: 12px;
+    }
+
+    .inner-content {
+        padding: 16px;
+    }
+}

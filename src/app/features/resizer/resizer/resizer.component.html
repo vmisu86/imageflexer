@@ -1,0 +1,82 @@
+<div class="resizer-container">
+    <div class="section-header">
+        <h2>Image Resizer</h2>
+        <p>Resize your images while preserving quality</p>
+    </div>
+
+    <nz-card>
+        <div class="settings-panel">
+            <form nz-form [nzLayout]="'vertical'">
+                <div nz-row [nzGutter]="16">
+                    <div nz-col [nzXs]="24" [nzSm]="8">
+                        <nz-form-item>
+                            <nz-form-label>Preset Sizes</nz-form-label>
+                            <nz-form-control>
+                                <nz-select [(ngModel)]="selectedPreset" (ngModelChange)="onPresetChange()"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <nz-option *ngFor="let preset of presetSizes" [nzValue]="preset"
+                                        [nzLabel]="preset.label">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col [nzXs]="12" [nzSm]="8">
+                        <nz-form-item>
+                            <nz-form-label>Max Width (px)</nz-form-label>
+                            <nz-form-control>
+                                <nz-input-number [(ngModel)]="config.maxWidth" [nzMin]="1" [nzMax]="10000"
+                                    [ngModelOptions]="{standalone: true}" [nzStep]="10">
+                                </nz-input-number>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col [nzXs]="12" [nzSm]="8">
+                        <nz-form-item>
+                            <nz-form-label>Max Height (px)</nz-form-label>
+                            <nz-form-control>
+                                <nz-input-number [(ngModel)]="config.maxHeight" [nzMin]="1" [nzMax]="10000"
+                                    [ngModelOptions]="{standalone: true}" [nzStep]="10">
+                                </nz-input-number>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <div nz-row [nzGutter]="16">
+                    <div nz-col [nzXs]="24" [nzSm]="16">
+                        <nz-form-item>
+                            <nz-form-label>Quality</nz-form-label>
+                            <nz-form-control>
+                                <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
+                                    [ngModelOptions]="{standalone: true}">
+                                </nz-slider>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col [nzXs]="24" [nzSm]="8">
+                        <nz-form-item>
+                            <nz-form-label>&nbsp;</nz-form-label>
+                            <nz-form-control>
+                                <label nz-checkbox [(ngModel)]="config.preserveAspectRatio"
+                                    [ngModelOptions]="{standalone: true}">
+                                    Preserve aspect ratio
+                                </label>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <app-file-dropzone [isProcessing]="isProcessing" (process)="processImages($event)">
+        </app-file-dropzone>
+    </nz-card>
+
+    <app-image-preview [images]="imageService.getProcessedImages()" [showComparison]="true"
+        (download)="downloadImage($event)" (downloadAll)="downloadAll()" (clear)="clearResults()">
+    </app-image-preview>
+</div>

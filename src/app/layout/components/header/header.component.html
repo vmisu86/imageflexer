@@ -1,0 +1,33 @@
+<nz-header class="app-header">
+  <div class="header-content">
+    <div class="logo">
+      <a [routerLink]="['/']">
+        <img src="assets/images/logo.svg" alt="ImageFlexer">
+        <span>ImageFlexer</span>
+      </a>
+    </div>
+
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="nav-menu">
+      <li nz-menu-item [routerLink]="['/converter']" routerLinkActive="ant-menu-item-selected">
+        <span nz-icon nzType="swap" nzTheme="outline"></span>
+        Converter
+      </li>
+      <li nz-menu-item [routerLink]="['/resizer']" routerLinkActive="ant-menu-item-selected">
+        <span nz-icon nzType="column-width" nzTheme="outline"></span>
+        Resizer
+      </li>
+      <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected">
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
+        Batch Processor
+      </li>
+    </ul>
+
+    <div class="header-controls">
+      <button nz-button nzType="text" (click)="toggleTheme()" class="theme-toggle">
+        <span nz-icon [nzType]="themeService.isDarkMode() ? 'sun' : 'moon'" nzTheme="outline"></span>
+      </button>
+
+      <app-settings-panel></app-settings-panel>
+    </div>
+  </div>
+</nz-header>

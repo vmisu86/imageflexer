@@ -1,0 +1,56 @@
+<div class="file-dropzone" [class.active]="isActive" [class.processing]="isProcessing" (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+
+    <div class="dropzone-content">
+        <ng-container *ngIf="!files.length">
+            <span nz-icon nzType="upload" nzTheme="outline" class="upload-icon"></span>
+            <h3>Drop your images here</h3>
+            <p>or</p>
+            <button nz-button nzType="primary" (click)="fileInput.click()">
+                Select Files
+            </button>
+            <p class="hint">Maximum file size: {{ maxFileSize | fileSize }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="files.length">
+            <div class="file-list">
+                <h3>{{ files.length }} file(s) selected</h3>
+
+                <div *ngIf="showPreview" class="preview-grid">
+                    <div *ngFor="let file of files; trackBy: trackByFile" class="preview-item">
+                        <!-- Use [attr.src] instead of [src] to avoid change detection errors -->
+                        <img [attr.src]="getPreviewUrl(file)" [alt]="file.name">
+                        <div class="file-details">
+                            <div class="filename">{{ file.name }}</div>
+                            <div class="filesize">{{ file.size | fileSize }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <nz-list *ngIf="!showPreview" [nzDataSource]="files" nzBordered [nzRenderItem]="fileItem">
+                    <ng-template #fileItem let-file>
+                        <nz-list-item>
+                            <div class="file-item">
+                                <span nz-icon nzType="file-image" nzTheme="outline"></span>
+                                <span class="filename">{{ file.name }}</span>
+                                <span class="filesize">{{ file.size | fileSize }}</span>
+                            </div>
+                        </nz-list-item>
+                    </ng-template>
+                </nz-list>
+
+                <div class="actions">
+                    <button nz-button nzType="default" (click)="clearFiles()" [disabled]="isProcessing">
+                        Clear
+                    </button>
+                    <button nz-button nzType="primary" (click)="processFiles()" [nzLoading]="isProcessing">
+                        Process Files
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <input #fileInput type="file" [multiple]="multiple" [accept]="accept" style="display: none"
+        (change)="onFileSelected($event)" />
+</div>

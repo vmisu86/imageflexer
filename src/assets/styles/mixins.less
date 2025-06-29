@@ -1,0 +1,46 @@
+.flex-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between() {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ellipsis() {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.transition(@property: all, @duration: 0.3s, @timing-function: ease-in-out) {
+    transition: @property @duration @timing-function;
+}
+
+.card-shadow() {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+.card-hover() {
+    transition: all 0.3s;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+    }
+}
+
+.responsive-padding(@desktop: 24px, @tablet: 16px, @mobile: 12px) {
+    padding: @desktop;
+
+    @media (max-width: 992px) {
+        padding: @tablet;
+    }
+
+    @media (max-width: 576px) {
+        padding: @mobile;
+    }
+}

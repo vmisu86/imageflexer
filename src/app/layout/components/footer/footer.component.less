@@ -1,0 +1,37 @@
+@import '../../../../assets/styles/variables.less';
+
+.app-footer {
+  text-align: center;
+  padding: 16px 24px;
+  background-color: @layout-header-background;
+  color: @text-color-secondary;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+
+  a {
+    color: @text-color-secondary;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

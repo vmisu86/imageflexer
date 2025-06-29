@@ -1,0 +1,48 @@
+<div class="converter-container">
+    <div class="section-header">
+        <h2>Image Format Converter</h2>
+        <p>Convert your images to different formats with optimized file sizes</p>
+    </div>
+
+    <nz-card>
+        <div class="settings-panel">
+            <form nz-form [nzLayout]="'vertical'">
+                <div nz-row [nzGutter]="16">
+                    <div nz-col [nzXs]="24" [nzSm]="12">
+                        <nz-form-item>
+                            <nz-form-label>Target Format</nz-form-label>
+                            <nz-form-control>
+                                <nz-select [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}">
+                                    <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value"
+                                        [nzLabel]="option.label">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col [nzXs]="24" [nzSm]="12">
+                        <nz-form-item>
+                            <nz-form-label>Quality</nz-form-label>
+                            <nz-form-control>
+                                <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
+                                    [ngModelOptions]="{standalone: true}" [nzDisabled]="config.format === 'image/png'">
+                                </nz-slider>
+                                <div *ngIf="config.format === 'image/png'" class="hint-text">
+                                    PNG is a lossless format and doesn't use quality settings
+                                </div>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <app-file-dropzone [isProcessing]="isProcessing" (process)="processImages($event)">
+        </app-file-dropzone>
+    </nz-card>
+
+    <app-image-preview [images]="imageService.getProcessedImages()" [showComparison]="true"
+        (download)="downloadImage($event)" (downloadAll)="downloadAll()" (clear)="clearResults()">
+    </app-image-preview>
+</div>

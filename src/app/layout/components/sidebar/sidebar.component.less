@@ -1,0 +1,44 @@
+@import '../../../../assets/styles/variables.less';
+
+.app-sidebar {
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+
+  &.ant-layout-sider-collapsed {
+    .sidebar-logo {
+      padding: 16px;
+
+      a {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.sidebar-logo {
+  height: 64px;
+  padding: 16px 16px 16px 24px;
+  display: flex;
+  align-items: center;
+  background-color: @layout-header-background;
+  overflow: hidden;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+  }
+
+  img {
+    height: 32px;
+    margin-right: 8px;
+  }
+
+  span {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}

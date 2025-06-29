@@ -1,0 +1,129 @@
+<button nz-button nzType="default" (click)="showSettings()">
+    <span nz-icon nzType="setting" nzTheme="outline"></span>
+    Settings
+</button>
+
+<nz-drawer [nzVisible]="isVisible" [nzTitle]="'Settings'" [nzWidth]="420" (nzOnClose)="closeSettings()">
+
+    <ng-container *nzDrawerContent>
+        <div class="settings-content">
+            <nz-tabset>
+                <nz-tab nzTitle="General">
+                    <div class="settings-section">
+                        <h3>Appearance</h3>
+
+                        <nz-form-item>
+                            <nz-form-label>Theme</nz-form-label>
+                            <nz-form-control>
+                                <nz-radio-group [(ngModel)]="settings.theme" [ngModelOptions]="{standalone: true}">
+                                    <label nz-radio-button nzValue="light">Light</label>
+                                    <label nz-radio-button nzValue="dark">Dark</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-control>
+                                <label nz-checkbox [(ngModel)]="settings.rememberSettings"
+                                    [ngModelOptions]="{standalone: true}">
+                                    Remember settings
+                                </label>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Default Image Settings</h3>
+
+                        <nz-form-item>
+                            <nz-form-label>Default Format</nz-form-label>
+                            <nz-form-control>
+                                <nz-select [(ngModel)]="settings.defaultFormat" [ngModelOptions]="{standalone: true}">
+                                    <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value"
+                                        [nzLabel]="option.label">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label>Default Quality</nz-form-label>
+                            <nz-form-control>
+                                <nz-slider [(ngModel)]="settings.defaultQuality" [nzMin]="1" [nzMax]="100"
+                                    [ngModelOptions]="{standalone: true}">
+                                </nz-slider>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </nz-tab>
+
+                <nz-tab nzTitle="Storage">
+                    <div class="settings-section">
+                        <h3>History Settings</h3>
+
+                        <nz-form-item>
+                            <nz-form-control>
+                                <label nz-checkbox [(ngModel)]="settings.saveHistory"
+                                    [ngModelOptions]="{standalone: true}">
+                                    Save processed images history
+                                </label>
+                                <div class="form-hint">
+                                    Images are saved in your browser's local storage
+                                </div>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label>History Limit</nz-form-label>
+                            <nz-form-control>
+                                <nz-input-number [(ngModel)]="settings.historyLimit" [nzMin]="5" [nzMax]="100"
+                                    [ngModelOptions]="{standalone: true}" [nzStep]="5"
+                                    [nzDisabled]="!settings.saveHistory">
+                                </nz-input-number>
+                                <div class="form-hint">
+                                    Maximum number of images to keep in history
+                                </div>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Upload Settings</h3>
+
+                        <nz-form-item>
+                            <nz-form-label>Max Upload Size (MB)</nz-form-label>
+                            <nz-form-control>
+                                <nz-input-number [(ngModel)]="settings.maxUploadSize" [nzMin]="1" [nzMax]="100"
+                                    [ngModelOptions]="{standalone: true}" [nzStep]="1" [nzFormatter]="formatterMB">
+                                </nz-input-number>
+                                <div class="form-hint">
+                                    Maximum file size allowed for upload
+                                </div>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div class="settings-section danger-zone">
+                        <h3>Danger Zone</h3>
+
+                        <button nz-button nzType="primary" nzDanger (click)="clearAllData()">
+                            Clear All Data
+                        </button>
+                        <div class="form-hint">
+                            This will clear all saved images and settings
+                        </div>
+                    </div>
+                </nz-tab>
+            </nz-tabset>
+        </div>
+
+        <div class="drawer-footer">
+            <button nz-button nzType="default" (click)="resetSettings()">
+                Reset to Defaults
+            </button>
+            <button nz-button nzType="primary" (click)="saveSettings()">
+                Save Settings
+            </button>
+        </div>
+    </ng-container>
+</nz-drawer>
