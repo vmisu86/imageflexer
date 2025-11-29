@@ -25,7 +25,7 @@
         <div class="config-grid">
             <nz-card class="config-card" [nzTitle]="convertEnabled ? 'Convert' : 'Convert (off)'" nzSize="small">
                 <div class="card-header">
-                    <label nz-switch name="batch-convert-toggle" [(ngModel)]="convertEnabled" [ngModelOptions]="{standalone: true}">
+                    <label nz-switch [(ngModel)]="convertEnabled" [ngModelOptions]="{standalone: true}">
                     </label>
                     <span class="card-hint">Turn on to change format/quality</span>
                 </div>
@@ -52,7 +52,7 @@
 
             <nz-card class="config-card" [nzTitle]="resizeEnabled ? 'Resize' : 'Resize (off)'" nzSize="small">
                 <div class="card-header">
-                    <label nz-switch name="batch-resize-toggle" [(ngModel)]="resizeEnabled" [ngModelOptions]="{standalone: true}">
+                    <label nz-switch [(ngModel)]="resizeEnabled" [ngModelOptions]="{standalone: true}">
                     </label>
                     <span class="card-hint">Turn on to set target dimensions</span>
                 </div>
