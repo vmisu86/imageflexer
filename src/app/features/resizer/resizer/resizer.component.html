@@ -25,7 +25,7 @@
         <div class="control-bar">
             <div class="control">
                 <label>Preset</label>
-                <nz-select [(ngModel)]="selectedPreset" (ngModelChange)="onPresetChange()"
+                <nz-select name="resizer-preset" [(ngModel)]="selectedPreset" (ngModelChange)="onPresetChange()"
                     [ngModelOptions]="{standalone: true}">
                     <nz-option *ngFor="let preset of presetSizes" [nzValue]="preset" [nzLabel]="preset.label">
                     </nz-option>
@@ -33,25 +33,25 @@
             </div>
             <div class="control numeric">
                 <label>Max width (px)</label>
-                <nz-input-number [(ngModel)]="config.maxWidth" [nzMin]="1" [nzMax]="10000"
+                <nz-input-number name="resizer-maxWidth" [(ngModel)]="config.maxWidth" [nzMin]="1" [nzMax]="10000"
                     [ngModelOptions]="{standalone: true}" [nzStep]="10">
                 </nz-input-number>
             </div>
             <div class="control numeric">
                 <label>Max height (px)</label>
-                <nz-input-number [(ngModel)]="config.maxHeight" [nzMin]="1" [nzMax]="10000"
+                <nz-input-number name="resizer-maxHeight" [(ngModel)]="config.maxHeight" [nzMin]="1" [nzMax]="10000"
                     [ngModelOptions]="{standalone: true}" [nzStep]="10">
                 </nz-input-number>
             </div>
             <div class="control">
                 <label>Quality</label>
-                <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
+                <nz-slider name="resizer-quality" [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
                     [ngModelOptions]="{standalone: true}">
                 </nz-slider>
             </div>
             <div class="control checkbox-control">
                 <label class="sr-only">Aspect ratio</label>
-                <label nz-checkbox [(ngModel)]="config.preserveAspectRatio" [ngModelOptions]="{standalone: true}">
+                <label nz-checkbox name="resizer-aspect" [(ngModel)]="config.preserveAspectRatio" [ngModelOptions]="{standalone: true}">
                     Preserve aspect ratio
                 </label>
             </div>

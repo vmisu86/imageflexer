@@ -25,14 +25,14 @@
         <div class="control-bar">
             <div class="control">
                 <label>Target format</label>
-                <nz-select [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}">
+                <nz-select name="converter-format" [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}">
                     <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value" [nzLabel]="option.label">
                     </nz-option>
                 </nz-select>
             </div>
             <div class="control slider-control">
                 <label>Quality</label>
-                <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100" [nzDisabled]="config.format === 'image/png'"
+                <nz-slider name="converter-quality" [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100" [nzDisabled]="config.format === 'image/png'"
                     [ngModelOptions]="{standalone: true}">
                 </nz-slider>
                 <div *ngIf="config.format === 'image/png'" class="hint-text">
