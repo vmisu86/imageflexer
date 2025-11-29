@@ -18,6 +18,7 @@ import { ThemeService } from './core/services/theme.service';
 import {
   MenuFoldOutline,
   MenuUnfoldOutline,
+  MenuOutline,
   FormOutline,
   DashboardOutline,
   UploadOutline,
@@ -38,6 +39,7 @@ import {
 const icons: IconDefinition[] = [
   MenuFoldOutline,
   MenuUnfoldOutline,
+  MenuOutline,
   DashboardOutline,
   FormOutline,
   UploadOutline,

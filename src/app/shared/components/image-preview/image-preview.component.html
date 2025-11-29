@@ -1,61 +1,106 @@
 <div class="image-preview-container">
     <div *ngIf="images.length > 0" class="preview-header">
-        <h2>Processed Images ({{ images.length }})</h2>
+        <div class="title-block">
+            <h2>Processed Images ({{ images.length }})</h2>
+            <div *ngIf="summary" class="summary-tags">
+                <nz-tag nzColor="success">Processed: {{ summary.processed }}</nz-tag>
+                <nz-tag nzColor="warning" *ngIf="summary.failed">Failed: {{ summary.failed }}</nz-tag>
+            </div>
+        </div>
 
         <div class="preview-actions">
-            <button nz-button nzType="primary" (click)="downloadAllImages()">
-                <span nz-icon nzType="download" nzTheme="outline"></span>
-                Download All
-            </button>
-
-            <button nz-button nzType="default" (click)="clearImages()">
-                <span nz-icon nzType="delete" nzTheme="outline"></span>
-                Clear
-            </button>
-        </div>
-    </div>
-
-    <div *ngIf="images.length === 0" class="no-images">
-        <span nz-icon nzType="inbox" nzTheme="outline"></span>
-        <p>No processed images yet</p>
-    </div>
-
-    <div *ngIf="images.length > 0" class="image-grid">
-        <div *ngFor="let image of images" class="image-card" [class.selected]="selectedImage === image"
-            (click)="selectImage(image)">
-
-            <div class="image-container">
-                <img [src]="image.dataUrl" [alt]="image.file.name">
-
-                <div *ngIf="getSavingPercentage(image) > 0" class="saving-badge">
-                    -{{ getSavingPercentage(image) | number:'1.0-0' }}%
-                </div>
+            <div nz-button-group>
+                <button nz-button [nzType]="viewMode === 'grid' ? 'primary' : 'default'" (click)="setView('grid')">
+                    <span nz-icon nzType="appstore" nzTheme="outline"></span> Grid
+                </button>
+                <button nz-button [nzType]="viewMode === 'list' ? 'primary' : 'default'" (click)="setView('list')">
+                    <span nz-icon nzType="unordered-list" nzTheme="outline"></span> List
+                </button>
             </div>
 
-            <div class="image-info">
-                <div class="name">{{ image.file.name }}</div>
-                <div class="specs">
-                    {{ image.width }}x{{ image.height }} |
-                    {{ image.newSize | fileSize }}
-                </div>
-
-                <nz-progress *ngIf="showComparison" [nzPercent]="getSavingPercentage(image)" nzSize="small"
-                    [nzShowInfo]="false" [nzStrokeColor]="'#52c41a'">
-                </nz-progress>
-
-                <div *ngIf="showComparison && getSavingPercentage(image) > 0" class="comparison">
-                    Original: {{ image.originalSize | fileSize }}
-                </div>
-            </div>
-
-            <div class="image-actions">
-                <button nz-button nzType="primary" nzShape="circle" nzSize="small"
-                    (click)="downloadImage(image); $event.stopPropagation()">
+            <div class="action-buttons">
+                <button nz-button nzType="primary" (click)="downloadAllImages()">
                     <span nz-icon nzType="download" nzTheme="outline"></span>
+                    Download All
+                </button>
+
+                <button nz-button nzType="default" (click)="clearImages()">
+                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+                    Clear
                 </button>
             </div>
         </div>
     </div>
+
+    <div *ngIf="images.length === 0" class="no-images">
+        <nz-empty nzDescription="No processed images yet"></nz-empty>
+    </div>
+
+    <ng-container *ngIf="images.length > 0">
+        <div *ngIf="viewMode === 'grid'" class="image-grid">
+            <div *ngFor="let image of images" class="image-card" [class.selected]="selectedImage === image"
+                (click)="selectImage(image)">
+
+                <div class="image-container">
+                    <img [src]="image.dataUrl" [alt]="image.file.name" loading="lazy" decoding="async">
+
+                    <div *ngIf="getSavingPercentage(image) > 0" class="saving-badge">
+                        -{{ getSavingPercentage(image) | number:'1.0-0' }}%
+                    </div>
+                </div>
+
+                <div class="image-info">
+                    <div class="name">{{ image.file.name }}</div>
+                    <div class="specs">
+                        {{ image.width }}x{{ image.height }} |
+                        {{ image.newSize | fileSize }}
+                    </div>
+
+                    <nz-progress *ngIf="showComparison" [nzPercent]="getSavingPercentage(image)" nzSize="small"
+                        [nzShowInfo]="false" [nzStrokeColor]="'#52c41a'">
+                    </nz-progress>
+
+                    <div *ngIf="showComparison && getSavingPercentage(image) > 0" class="comparison">
+                        Original: {{ image.originalSize | fileSize }}
+                    </div>
+                </div>
+
+                <div class="image-actions">
+                    <button nz-button nzType="primary" nzShape="circle" nzSize="small"
+                        (click)="downloadImage(image); $event.stopPropagation()">
+                        <span nz-icon nzType="download" nzTheme="outline"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="viewMode === 'list'" class="image-list">
+            <nz-list [nzDataSource]="images" [nzRenderItem]="listTpl" nzBordered>
+                <ng-template #listTpl let-item>
+                    <nz-list-item>
+                        <div class="list-row">
+                            <div class="list-main">
+                                <div class="name">{{ item.file.name }}</div>
+                                <div class="meta">
+                                    {{ item.width }}x{{ item.height }} • {{ item.newSize | fileSize }} •
+                                    {{ item.format.split('/')[1]?.toUpperCase() }}
+                                </div>
+                            </div>
+                            <div class="list-actions">
+                                <nz-tag nzColor="success" *ngIf="getSavingPercentage(item) > 0">
+                                    -{{ getSavingPercentage(item) | number:'1.0-0' }}%
+                                </nz-tag>
+                                <button nz-button nzType="link" (click)="downloadImage(item); $event.stopPropagation()">
+                                    <span nz-icon nzType="download" nzTheme="outline"></span>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </nz-list-item>
+                </ng-template>
+            </nz-list>
+        </div>
+    </ng-container>
 
     <!-- Detailed view of selected image -->
     <nz-modal [nzVisible]="!!selectedImage" [nzTitle]="selectedImage?.file?.name || ''" [nzFooter]="null"
@@ -64,7 +109,7 @@
         <ng-container *nzModalContent>
             <div *ngIf="selectedImage" class="image-details">
                 <div class="image-large-preview">
-                    <img [src]="selectedImage.dataUrl" [alt]="selectedImage.file.name">
+                    <img [src]="selectedImage.dataUrl" [alt]="selectedImage.file.name" loading="lazy" decoding="async">
                 </div>
 
                 <div class="image-metadata">
@@ -72,7 +117,7 @@
 
                     <nz-descriptions [nzColumn]="1" nzBordered>
                         <nz-descriptions-item nzTitle="Dimensions">
-                            {{ selectedImage.width }} × {{ selectedImage.height }} px
+                            {{ selectedImage.width }} Į- {{ selectedImage.height }} px
                         </nz-descriptions-item>
                         <nz-descriptions-item nzTitle="Format">
                             {{ selectedImage.format.split('/')[1].toUpperCase() }}

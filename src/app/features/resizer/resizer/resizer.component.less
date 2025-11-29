@@ -18,6 +18,72 @@
   }
 }
 
-.settings-panel {
-  margin-bottom: 24px;
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  .steps {
+    .step-title {
+      font-weight: 600;
+      color: @heading-color;
+      margin-bottom: 4px;
+    }
+    .step-list {
+      color: @text-color-secondary;
+      font-size: 13px;
+    }
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .status-hint {
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
+}
+
+.control-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    label {
+      font-weight: 500;
+      color: @text-color;
+    }
+  }
+
+  .numeric nz-input-number {
+    width: 100%;
+  }
+
+  .checkbox-control {
+    align-self: flex-end;
+    label {
+      font-weight: 400;
+    }
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

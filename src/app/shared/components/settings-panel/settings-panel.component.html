@@ -15,7 +15,7 @@
                         <nz-form-item>
                             <nz-form-label>Theme</nz-form-label>
                             <nz-form-control>
-                                <nz-radio-group [(ngModel)]="settings.theme" [ngModelOptions]="{standalone: true}">
+                                <nz-radio-group name="settings-theme" [(ngModel)]="settings.theme" [ngModelOptions]="{standalone: true}">
                                     <label nz-radio-button nzValue="light">Light</label>
                                     <label nz-radio-button nzValue="dark">Dark</label>
                                 </nz-radio-group>
@@ -24,7 +24,7 @@
 
                         <nz-form-item>
                             <nz-form-control>
-                                <label nz-checkbox [(ngModel)]="settings.rememberSettings"
+                                <label nz-checkbox name="remember-settings" [(ngModel)]="settings.rememberSettings"
                                     [ngModelOptions]="{standalone: true}">
                                     Remember settings
                                 </label>
@@ -38,7 +38,7 @@
                         <nz-form-item>
                             <nz-form-label>Default Format</nz-form-label>
                             <nz-form-control>
-                                <nz-select [(ngModel)]="settings.defaultFormat" [ngModelOptions]="{standalone: true}">
+                                <nz-select name="default-format" [(ngModel)]="settings.defaultFormat" [ngModelOptions]="{standalone: true}">
                                     <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value"
                                         [nzLabel]="option.label">
                                     </nz-option>
@@ -49,7 +49,7 @@
                         <nz-form-item>
                             <nz-form-label>Default Quality</nz-form-label>
                             <nz-form-control>
-                                <nz-slider [(ngModel)]="settings.defaultQuality" [nzMin]="1" [nzMax]="100"
+                                <nz-slider name="default-quality" [(ngModel)]="settings.defaultQuality" [nzMin]="1" [nzMax]="100"
                                     [ngModelOptions]="{standalone: true}">
                                 </nz-slider>
                             </nz-form-control>
@@ -63,7 +63,7 @@
 
                         <nz-form-item>
                             <nz-form-control>
-                                <label nz-checkbox [(ngModel)]="settings.saveHistory"
+                                <label nz-checkbox name="save-history" [(ngModel)]="settings.saveHistory"
                                     [ngModelOptions]="{standalone: true}">
                                     Save processed images history
                                 </label>
@@ -76,7 +76,7 @@
                         <nz-form-item>
                             <nz-form-label>History Limit</nz-form-label>
                             <nz-form-control>
-                                <nz-input-number [(ngModel)]="settings.historyLimit" [nzMin]="5" [nzMax]="100"
+                                <nz-input-number name="history-limit" [(ngModel)]="settings.historyLimit" [nzMin]="5" [nzMax]="100"
                                     [ngModelOptions]="{standalone: true}" [nzStep]="5"
                                     [nzDisabled]="!settings.saveHistory">
                                 </nz-input-number>
@@ -93,7 +93,7 @@
                         <nz-form-item>
                             <nz-form-label>Max Upload Size (MB)</nz-form-label>
                             <nz-form-control>
-                                <nz-input-number [(ngModel)]="settings.maxUploadSize" [nzMin]="1" [nzMax]="100"
+                                <nz-input-number name="max-upload-size" [(ngModel)]="settings.maxUploadSize" [nzMin]="1" [nzMax]="100"
                                     [ngModelOptions]="{standalone: true}" [nzStep]="1" [nzFormatter]="formatterMB">
                                 </nz-input-number>
                                 <div class="form-hint">

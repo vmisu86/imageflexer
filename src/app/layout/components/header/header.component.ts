@@ -8,9 +8,19 @@ import { ThemeService } from '../../../core/services/theme.service';
   standalone: false
 })
 export class HeaderComponent {
+  isDrawerOpen = false;
+
   constructor(public themeService: ThemeService) { }
 
   toggleTheme(): void {
     this.themeService.toggleDarkMode();
+  }
+
+  openDrawer(): void {
+    this.isDrawerOpen = true;
+  }
+
+  closeDrawer(): void {
+    this.isDrawerOpen = false;
   }
 }

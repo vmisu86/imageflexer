@@ -1,48 +1,51 @@
 <div class="converter-container">
     <div class="section-header">
         <h2>Image Format Converter</h2>
-        <p>Convert your images to different formats with optimized file sizes</p>
+        <p>Convert images quickly: add files, pick a format/quality, then download.</p>
     </div>
 
     <nz-card>
-        <div class="settings-panel">
-            <form nz-form [nzLayout]="'vertical'">
-                <div nz-row [nzGutter]="16">
-                    <div nz-col [nzXs]="24" [nzSm]="12">
-                        <nz-form-item>
-                            <nz-form-label>Target Format</nz-form-label>
-                            <nz-form-control>
-                                <nz-select [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}">
-                                    <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value"
-                                        [nzLabel]="option.label">
-                                    </nz-option>
-                                </nz-select>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </div>
+        <div class="panel-header">
+            <div class="steps">
+                <div class="step-title">Quick steps</div>
+                <div class="step-list">1) Add images  2) Pick format/quality  3) Process & download</div>
+            </div>
+            <div class="status">
+                <nz-tag [nzColor]="isProcessing ? 'processing' : 'success'">
+                    {{ isProcessing ? 'Processing…' : 'Ready' }}
+                </nz-tag>
+                <span class="status-hint" *ngIf="isProcessing && progress.total > 0">
+                    Processing {{ progress.current }} / {{ progress.total }}
+                </span>
+                <span class="status-hint" *ngIf="isProcessing && progress.total === 0">Working on your files</span>
+                <span class="status-hint" *ngIf="!isProcessing">Drop files or click select</span>
+            </div>
+        </div>
 
-                    <div nz-col [nzXs]="24" [nzSm]="12">
-                        <nz-form-item>
-                            <nz-form-label>Quality</nz-form-label>
-                            <nz-form-control>
-                                <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
-                                    [ngModelOptions]="{standalone: true}" [nzDisabled]="config.format === 'image/png'">
-                                </nz-slider>
-                                <div *ngIf="config.format === 'image/png'" class="hint-text">
-                                    PNG is a lossless format and doesn't use quality settings
-                                </div>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </div>
+        <div class="control-bar">
+            <div class="control">
+                <label>Target format</label>
+                <nz-select name="converter-format" [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value" [nzLabel]="option.label">
+                    </nz-option>
+                </nz-select>
+            </div>
+            <div class="control slider-control">
+                <label>Quality</label>
+                <nz-slider name="converter-quality" [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100" [nzDisabled]="config.format === 'image/png'"
+                    [ngModelOptions]="{standalone: true}">
+                </nz-slider>
+                <div *ngIf="config.format === 'image/png'" class="hint-text">
+                    PNG ignores quality (lossless)
                 </div>
-            </form>
+            </div>
         </div>
 
         <app-file-dropzone [isProcessing]="isProcessing" (process)="processImages($event)">
         </app-file-dropzone>
     </nz-card>
 
-    <app-image-preview [images]="imageService.getProcessedImages()" [showComparison]="true"
+    <app-image-preview [images]="imageService.getProcessedImages()" [showComparison]="true" [summary]="summary"
         (download)="downloadImage($event)" (downloadAll)="downloadAll()" (clear)="clearResults()">
     </app-image-preview>
 </div>

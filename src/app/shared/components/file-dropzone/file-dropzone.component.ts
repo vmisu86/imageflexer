@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, OnInit, ChangeDetectorRef, NgZone, AfterViewInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ChangeDetectorRef, NgZone, AfterViewInit, ChangeDetectionStrategy, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -18,6 +18,8 @@ export class FileDropzoneComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() fileSelected = new EventEmitter<File[]>();
   @Output() process = new EventEmitter<File[]>();
 
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   files: File[] = [];
   isActive = false;
   private previewUrls: Map<File, string> = new Map();
@@ -33,6 +35,14 @@ export class FileDropzoneComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.cdr.detectChanges();
+  }
+
+  onKeydown(event: KeyboardEvent): void {
+    const key = event.key.toLowerCase();
+    if (key === 'enter' || key === ' ') {
+      event.preventDefault();
+      this.triggerFilePicker();
+    }
   }
 
   onDragOver(event: DragEvent): void {
@@ -63,6 +73,12 @@ export class FileDropzoneComponent implements OnInit, AfterViewInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.handleFiles(input.files);
+    }
+  }
+
+  triggerFilePicker(): void {
+    if (this.fileInput) {
+      this.fileInput.nativeElement.click();
     }
   }
 

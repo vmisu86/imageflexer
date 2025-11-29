@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ImageConfig, ProcessedImage } from '../models/image-config.model';
+import { BatchResult, ImageConfig, ProcessFailure, ProcessProgress, ProcessedImage } from '../models/image-config.model';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -12,6 +12,8 @@ export class ImageService {
 
     private processingSubject = new BehaviorSubject<boolean>(false);
     public processing$ = this.processingSubject.asObservable();
+    private progressSubject = new BehaviorSubject<ProcessProgress>({ current: 0, total: 0 });
+    public progress$ = this.progressSubject.asObservable();
 
     constructor(private storageService: StorageService) {
         // Load any saved images from storage
@@ -58,31 +60,40 @@ export class ImageService {
     /**
      * Process multiple image files in batch
      */
-    async processBatch(files: File[], config: ImageConfig): Promise<ProcessedImage[]> {
+    async processBatch(files: File[], config: ImageConfig): Promise<BatchResult> {
         this.processingSubject.next(true);
         const results: ProcessedImage[] = [];
+        const failures: ProcessFailure[] = [];
+        this.progressSubject.next({ current: 0, total: files.length });
 
         try {
-            for (const file of files) {
+            for (let index = 0; index < files.length; index++) {
+                const file = files[index];
                 try {
                     const result = await this.processImage(file, config);
                     results.push(result);
                 } catch (error) {
+                    const message = error instanceof Error ? error.message : 'Unknown processing error';
+                    failures.push({ file, error: message });
                     console.error(`Error processing ${file.name}:`, error);
                 }
+                this.progressSubject.next({ current: index + 1, total: files.length });
             }
 
             // Update the BehaviorSubject with new results
-            const currentImages = this.processedImagesSubject.value;
-            const updatedImages = [...currentImages, ...results];
-            this.processedImagesSubject.next(updatedImages);
+            if (results.length) {
+                const currentImages = this.processedImagesSubject.value;
+                const updatedImages = [...currentImages, ...results];
+                this.processedImagesSubject.next(updatedImages);
 
-            // Save to storage if enabled
-            this.storageService.setItem('processedImages', updatedImages);
+                // Save to storage if enabled
+                this.storageService.setItem('processedImages', updatedImages);
+            }
 
-            return results;
+            return { processed: results, failed: failures };
         } finally {
             this.processingSubject.next(false);
+            this.progressSubject.next({ current: 0, total: 0 });
         }
     }
 

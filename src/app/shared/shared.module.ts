@@ -19,6 +19,8 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 // Components
 import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.component';
@@ -71,7 +73,9 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
         NzCardModule,
         NzLayoutModule,
         NzDividerModule,
-        NzMenuModule
+        NzMenuModule,
+        NzEmptyModule,
+        NzSwitchModule
     ],
     exports: [
         // Common Angular Modules
@@ -108,7 +112,9 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
         NzCardModule,
         NzLayoutModule,
         NzDividerModule,
-        NzMenuModule
+        NzMenuModule,
+        NzEmptyModule,
+        NzSwitchModule
     ]
 })
 export class SharedModule { }

@@ -18,6 +18,12 @@
   padding: 0 16px;
 }
 
+.menu-toggle {
+  display: none;
+  color: white;
+  margin-right: 8px;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -64,10 +70,24 @@
   .theme-toggle {
     margin-right: 8px;
   }
+
+  .desktop-settings {
+    display: block;
+  }
+}
+
+.drawer-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+
   .header-content {
     padding: 0 8px;
   }
@@ -76,13 +96,11 @@
     display: none;
   }
 
-  .nav-menu {
-    li {
-      padding: 0 12px;
+  .desktop-nav {
+    display: none;
+  }
 
-      span:not([nz-icon]) {
-        display: none;
-      }
-    }
+  .desktop-settings {
+    display: none;
   }
 }

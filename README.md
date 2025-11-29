@@ -1,37 +1,48 @@
 # Imageflexer
 
-Browser-based image utility for converting, resizing, and batch-processing pictures with instant previews and client-side downloads. Built with Angular 19 and Ng Zorro.
+Browser-based image utility for converting, resizing, and batch-processing pictures with instant previews and client-side downloads. Built with Angular 20 and Ng Zorro.
 
-## Features
-- Convert between JPG/PNG/WebP/AVIF with adjustable quality.
-- Resize with presets or custom dimensions; optional aspect ratio preservation.
-- Batch mode to mix resize/convert operations and zip all results.
-- Drag-and-drop upload with file-type/size validation and inline previews.
-- Download singles or all-as-zip; remembers processed images and user settings (optional).
-- Light/dark themes with system-preference support.
+## Feature Snapshot
+| Area | What you get |
+| --- | --- |
+| Batch Studio | Convert/resize many images at once with side-by-side cards, live progress, and success/failure summaries |
+| Converter & Resizer | JPG/PNG/WebP/AVIF with quality control; presets or custom dimensions; optional aspect lock |
+| Uploads | Drag-and-drop with type/size validation, keyboard-accessible dropzone, lazy-loaded previews |
+| Results | Grid/list toggle, per-file downloads, Download All as zip, saved history (optional) |
+| Personalization | Light/dark themes, saved defaults (format, quality, upload limits), clear-all controls |
 
-## Tech Stack
-- Angular 19, TypeScript, Ng Zorro (Ant Design), LESS, JSZip, RxJS.
+## Stack & Scripts
+| Category | Details |
+| --- | --- |
+| Framework | Angular 20, TypeScript, Ng Zorro (Ant Design), LESS, RxJS |
+| Assets | JSZip (zip downloads), Canvas API (processing) |
+| Scripts | `npm start` (dev), `npm run build:prod` (prod build), `npm test` (Karma/Jasmine) |
 
-## Getting Started
-1) Install dependencies: `npm install`
-2) Run the dev server: `npm start` then open `http://localhost:4200/`
-3) Production build: `npm run build:prod`
-4) Tests (Karma/Jasmine): `npm test`
+## Quickstart
+1) `npm install`  
+2) `npm start` → open `http://localhost:4200/`  
+3) Build: `npm run build:prod`  
+4) Tests: `npm test`
 
-## Usage
-- Pick a tool from the header (Converter, Resizer, Batch Processor).
-- Drop or select images in the dropzone; adjust format/quality or dimensions as needed.
-- Click the action button to process; use the preview list to download individual files or “Download All” to get a zip.
-- Open the settings panel (gear icon) to change defaults (format, quality, max upload size, history), toggle dark mode, or clear saved data.
+## How to Use
+- Pick a tool (Batch Studio, Converter, Resizer) from the header/drawer.
+- Drop or select images; set format/quality and/or dimensions.
+- Click Process; track progress; download singles or “Download All” for a zip.
+- Settings (gear icon): adjust defaults, upload cap, history limit, theme; clear saved data.
 
-## Project Structure (high level)
-- `src/app/core` – services (image processing, storage, theme) and models for settings/config.
-- `src/app/shared` – reusable components (file dropzone, image preview, settings panel), directives, pipes, and Ng Zorro exports.
-- `src/app/features` – lazy-loaded Converter, Resizer, and Batch Processor modules/components.
-- `src/app/layout` – header/sidebar/footer shell and navigation.
-- `src/assets/styles` – LESS variables, mixins, and light/dark theme definitions.
+## Architecture Overview
+```
+src/
+├─ app/
+│  ├─ core/               # services (image, storage, theme) + models
+│  ├─ shared/             # dropzone, preview, settings, directives, pipes, Ng Zorro exports
+│  ├─ features/           # batch (Batch Studio), converter, resizer (lazy-loaded)
+│  ├─ layout/             # header/footer shell and navigation
+│  ├─ app.config.ts       # providers, icons, i18n, router
+│  └─ app.routes.ts       # routes default to Batch Studio
+└─ assets/styles/         # LESS variables, mixins, light/dark themes
+```
 
 ## Notes
-- Processing happens entirely in the browser via the Canvas API; very large images may hit memory limits despite the 50 MB default upload cap.
-- Processed images and settings are stored in `localStorage`; clear them from the settings panel if needed.
+- Processing is 100% in-browser via the Canvas API; very large images can hit memory limits despite the 50 MB default upload cap.
+- Processed images and settings live in `localStorage`; clear them from the settings panel if needed.

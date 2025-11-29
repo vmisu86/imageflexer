@@ -18,12 +18,60 @@
   }
 }
 
-.settings-panel {
-  margin-bottom: 24px;
-}
-
 .hint-text {
   color: @text-color-secondary;
   font-size: 12px;
   margin-top: 4px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  .steps {
+    .step-title {
+      font-weight: 600;
+      color: @heading-color;
+      margin-bottom: 4px;
+    }
+    .step-list {
+      color: @text-color-secondary;
+      font-size: 13px;
+    }
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .status-hint {
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
+}
+
+.control-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    label {
+      font-weight: 500;
+      color: @text-color;
+    }
+  }
+
+  .slider-control nz-slider {
+    width: 100%;
+  }
 }

@@ -18,36 +18,85 @@
   }
 }
 
-.settings-panel {
-  margin-bottom: 24px;
-}
-
-.operation-group {
-  background-color: @component-background;
-  border: 1px solid @border-color-split;
-  border-radius: 4px;
-  padding: 16px;
-  margin-bottom: 16px;
-
-  &.disabled {
-    opacity: 0.6;
-    pointer-events: none;
-  }
-}
-
-.operation-header {
+.panel-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
 
-  h3 {
-    margin-bottom: 0;
+  .steps {
+    .step-title {
+      font-weight: 600;
+      color: @heading-color;
+      margin-bottom: 4px;
+    }
+    .step-list {
+      color: @text-color-secondary;
+      font-size: 13px;
+    }
   }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .status-hint {
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
+}
+
+.control-bar {
+  margin-bottom: 16px;
 }
 
 .hint-text {
   color: @text-color-secondary;
   font-size: 12px;
   margin-top: 4px;
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.config-card {
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    .card-hint {
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    label {
+      font-weight: 500;
+      color: @text-color;
+    }
+  }
+
+  .numeric nz-input-number {
+    width: 100%;
+  }
+
+  .checkbox-control {
+    margin-top: 8px;
+    label {
+      font-weight: 400;
+    }
+  }
 }
