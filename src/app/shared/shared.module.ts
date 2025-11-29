@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 // Ng-Zorro Components
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
@@ -56,7 +55,6 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
         // Ng-Zorro Modules
         NzButtonModule,
         NzIconModule,
-        NzMessageModule,
         NzListModule,
         NzModalModule,
         NzDrawerModule,
@@ -94,7 +92,6 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
         // Ng-Zorro Modules
         NzButtonModule,
         NzIconModule,
-        NzMessageModule,
         NzListModule,
         NzModalModule,
         NzDrawerModule,
