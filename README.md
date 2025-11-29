@@ -1,37 +1,36 @@
 # Imageflexer
 
-Browser-based image utility for converting, resizing, and batch-processing pictures with instant previews and client-side downloads. Built with Angular 19 and Ng Zorro.
+Browser-based image utility for converting, resizing, and batch-processing pictures with instant previews and client-side downloads. Built with Angular 20 and Ng Zorro.
 
 ## Features
-- Convert between JPG/PNG/WebP/AVIF with adjustable quality.
-- Resize with presets or custom dimensions; optional aspect ratio preservation.
-- Batch mode to mix resize/convert operations and zip all results.
-- Drag-and-drop upload with file-type/size validation and inline previews.
-- Download singles or all-as-zip; remembers processed images and user settings (optional).
-- Light/dark themes with system-preference support.
+- **Batch Studio first:** Process many images at once with side-by-side convert/resize cards, live progress, and success/failure summaries.
+- **Converters & resizer:** Convert JPG/PNG/WebP/AVIF with quality control; resize via presets or custom dimensions while optionally preserving aspect ratio.
+- **Friendly uploads:** Drag-and-drop with type/size validation, keyboard-accessible dropzone, and lazy-loaded previews.
+- **Flexible results:** Toggle grid/list views, download singles or all-as-zip, and keep a history of processed files (optional).
+- **Personalization:** Light/dark themes, saved defaults (format, quality, upload limits), and clear-all controls.
 
 ## Tech Stack
-- Angular 19, TypeScript, Ng Zorro (Ant Design), LESS, JSZip, RxJS.
+- Angular 20, TypeScript, Ng Zorro (Ant Design), LESS, JSZip, RxJS.
 
 ## Getting Started
 1) Install dependencies: `npm install`
-2) Run the dev server: `npm start` then open `http://localhost:4200/`
+2) Start dev server: `npm start` then open `http://localhost:4200/`
 3) Production build: `npm run build:prod`
-4) Tests (Karma/Jasmine): `npm test`
+4) Tests: `npm test` (Karma/Jasmine)
 
 ## Usage
-- Pick a tool from the header (Converter, Resizer, Batch Processor).
-- Drop or select images in the dropzone; adjust format/quality or dimensions as needed.
-- Click the action button to process; use the preview list to download individual files or “Download All” to get a zip.
-- Open the settings panel (gear icon) to change defaults (format, quality, max upload size, history), toggle dark mode, or clear saved data.
+- Choose a tool (Batch Studio, Converter, Resizer) from the header/drawer.
+- Drop or select images; set format/quality and/or dimensions.
+- Click Process; monitor progress; download individual files or “Download All” for a zip.
+- Open the settings panel (gear icon) to tune defaults, toggle dark mode, or clear saved data.
 
 ## Project Structure (high level)
 - `src/app/core` – services (image processing, storage, theme) and models for settings/config.
-- `src/app/shared` – reusable components (file dropzone, image preview, settings panel), directives, pipes, and Ng Zorro exports.
-- `src/app/features` – lazy-loaded Converter, Resizer, and Batch Processor modules/components.
-- `src/app/layout` – header/sidebar/footer shell and navigation.
+- `src/app/shared` – reusable components (dropzone, preview, settings), directives, pipes, Ng Zorro exports.
+- `src/app/features` – lazy-loaded Batch Studio, Converter, Resizer modules/components.
+- `src/app/layout` – header/footer shell and navigation.
 - `src/assets/styles` – LESS variables, mixins, and light/dark theme definitions.
 
 ## Notes
-- Processing happens entirely in the browser via the Canvas API; very large images may hit memory limits despite the 50 MB default upload cap.
-- Processed images and settings are stored in `localStorage`; clear them from the settings panel if needed.
+- All processing runs in-browser via the Canvas API; very large images can hit memory limits despite the 50 MB default upload cap.
+- Processed images and settings live in `localStorage`; clear them from the settings panel if needed.
