@@ -1,6 +1,6 @@
 <div class="batch-processor-container">
     <div class="section-header">
-        <h2>Batch Image Processor</h2>
+        <h2>Batch Studio</h2>
         <p>Handle many images at once: add files, choose conversion and/or resizing, then process.</p>
     </div>
 
@@ -19,52 +19,59 @@
             </div>
         </div>
 
-        <div class="control-bar">
-            <div class="control checkbox-control">
-                <label nz-checkbox [(ngModel)]="convertEnabled" [ngModelOptions]="{standalone: true}">
-                    Enable convert
-                </label>
-            </div>
-            <div class="control">
-                <label>Format</label>
-                <nz-select [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}" [nzDisabled]="!convertEnabled">
-                    <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value" [nzLabel]="option.label">
-                    </nz-option>
-                </nz-select>
-            </div>
-            <div class="control slider-control">
-                <label>Quality</label>
-                <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
-                    [ngModelOptions]="{standalone: true}" [nzDisabled]="!convertEnabled || config.format === 'image/png'">
-                </nz-slider>
-                <div *ngIf="config.format === 'image/png'" class="hint-text">
-                    PNG ignores quality (lossless)
+        <div class="config-grid">
+            <nz-card class="config-card" [nzTitle]="convertEnabled ? 'Convert' : 'Convert (off)'" nzSize="small">
+                <div class="card-header">
+                    <label nz-switch [(ngModel)]="convertEnabled" [ngModelOptions]="{standalone: true}">
+                    </label>
+                    <span class="card-hint">Turn on to change format/quality</span>
                 </div>
-            </div>
+                <div class="control">
+                    <label>Format</label>
+                    <nz-select [(ngModel)]="config.format" [ngModelOptions]="{standalone: true}"
+                        [nzDisabled]="!convertEnabled">
+                        <nz-option *ngFor="let option of formatOptions" [nzValue]="option.value"
+                            [nzLabel]="option.label">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="control slider-control">
+                    <label>Quality</label>
+                    <nz-slider [(ngModel)]="config.quality" [nzMin]="1" [nzMax]="100"
+                        [ngModelOptions]="{standalone: true}"
+                        [nzDisabled]="!convertEnabled || config.format === 'image/png'">
+                    </nz-slider>
+                    <div *ngIf="config.format === 'image/png'" class="hint-text">
+                        PNG ignores quality (lossless)
+                    </div>
+                </div>
+            </nz-card>
 
-            <div class="control checkbox-control">
-                <label nz-checkbox [(ngModel)]="resizeEnabled" [ngModelOptions]="{standalone: true}">
-                    Enable resize
-                </label>
-            </div>
-            <div class="control numeric">
-                <label>Max width (px)</label>
-                <nz-input-number [(ngModel)]="config.maxWidth" [nzMin]="1" [nzMax]="10000"
-                    [ngModelOptions]="{standalone: true}" [nzStep]="10" [nzDisabled]="!resizeEnabled">
-                </nz-input-number>
-            </div>
-            <div class="control numeric">
-                <label>Max height (px)</label>
-                <nz-input-number [(ngModel)]="config.maxHeight" [nzMin]="1" [nzMax]="10000"
-                    [ngModelOptions]="{standalone: true}" [nzStep]="10" [nzDisabled]="!resizeEnabled">
-                </nz-input-number>
-            </div>
-            <div class="control checkbox-control">
-                <label nz-checkbox [(ngModel)]="config.preserveAspectRatio" [ngModelOptions]="{standalone: true}"
-                    [nzDisabled]="!resizeEnabled">
-                    Preserve aspect ratio
-                </label>
-            </div>
+            <nz-card class="config-card" [nzTitle]="resizeEnabled ? 'Resize' : 'Resize (off)'" nzSize="small">
+                <div class="card-header">
+                    <label nz-switch [(ngModel)]="resizeEnabled" [ngModelOptions]="{standalone: true}">
+                    </label>
+                    <span class="card-hint">Turn on to set target dimensions</span>
+                </div>
+                <div class="control numeric">
+                    <label>Max width (px)</label>
+                    <nz-input-number [(ngModel)]="config.maxWidth" [nzMin]="1" [nzMax]="10000"
+                        [ngModelOptions]="{standalone: true}" [nzStep]="10" [nzDisabled]="!resizeEnabled">
+                    </nz-input-number>
+                </div>
+                <div class="control numeric">
+                    <label>Max height (px)</label>
+                    <nz-input-number [(ngModel)]="config.maxHeight" [nzMin]="1" [nzMax]="10000"
+                        [ngModelOptions]="{standalone: true}" [nzStep]="10" [nzDisabled]="!resizeEnabled">
+                    </nz-input-number>
+                </div>
+                <div class="control checkbox-control">
+                    <label nz-checkbox [(ngModel)]="config.preserveAspectRatio" [ngModelOptions]="{standalone: true}"
+                        [nzDisabled]="!resizeEnabled">
+                        Preserve aspect ratio
+                    </label>
+                </div>
+            </nz-card>
         </div>
 
         <app-file-dropzone [isProcessing]="isProcessing" (process)="processImages($event)">

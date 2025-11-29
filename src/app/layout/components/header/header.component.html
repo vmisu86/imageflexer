@@ -13,6 +13,10 @@
     </div>
 
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="nav-menu desktop-nav" role="menubar">
+      <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected" role="menuitem">
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
+        Batch Studio
+      </li>
       <li nz-menu-item [routerLink]="['/converter']" routerLinkActive="ant-menu-item-selected" role="menuitem">
         <span nz-icon nzType="swap" nzTheme="outline"></span>
         Converter
@@ -20,10 +24,6 @@
       <li nz-menu-item [routerLink]="['/resizer']" routerLinkActive="ant-menu-item-selected" role="menuitem">
         <span nz-icon nzType="column-width" nzTheme="outline"></span>
         Resizer
-      </li>
-      <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected" role="menuitem">
-        <span nz-icon nzType="appstore" nzTheme="outline"></span>
-        Batch Processor
       </li>
     </ul>
 
@@ -43,6 +43,10 @@
   (nzOnClose)="closeDrawer()" class="mobile-drawer">
   <ng-container *nzDrawerContent>
     <ul nz-menu nzMode="inline" (click)="closeDrawer()" class="mobile-nav">
+      <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected">
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
+        Batch Studio
+      </li>
       <li nz-menu-item [routerLink]="['/converter']" routerLinkActive="ant-menu-item-selected">
         <span nz-icon nzType="swap" nzTheme="outline"></span>
         Converter
@@ -50,10 +54,6 @@
       <li nz-menu-item [routerLink]="['/resizer']" routerLinkActive="ant-menu-item-selected">
         <span nz-icon nzType="column-width" nzTheme="outline"></span>
         Resizer
-      </li>
-      <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected">
-        <span nz-icon nzType="appstore" nzTheme="outline"></span>
-        Batch Processor
       </li>
     </ul>
 

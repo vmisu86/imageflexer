@@ -50,15 +50,39 @@
 }
 
 .control-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
   margin-bottom: 16px;
+}
+
+.hint-text {
+  color: @text-color-secondary;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.config-card {
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    .card-hint {
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
 
   .control {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    margin-bottom: 12px;
     label {
       font-weight: 500;
       color: @text-color;
@@ -70,15 +94,9 @@
   }
 
   .checkbox-control {
-    align-self: flex-end;
+    margin-top: 8px;
     label {
       font-weight: 400;
     }
   }
-}
-
-.hint-text {
-  color: @text-color-secondary;
-  font-size: 12px;
-  margin-top: 4px;
 }
