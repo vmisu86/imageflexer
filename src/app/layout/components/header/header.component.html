@@ -1,13 +1,48 @@
 <nz-header class="app-header">
   <div class="header-content">
+    <button class="menu-toggle" nz-button nzType="text" nzShape="circle" (click)="openDrawer()"
+      aria-label="Open navigation" [attr.aria-expanded]="isDrawerOpen">
+      <span nz-icon nzType="menu" nzTheme="outline"></span>
+    </button>
+
     <div class="logo">
-      <a [routerLink]="['/']">
+      <a [routerLink]="['/']" aria-label="ImageFlexer home">
         <img src="assets/images/logo.svg" alt="ImageFlexer">
         <span>ImageFlexer</span>
       </a>
     </div>
 
-    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="nav-menu">
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="nav-menu desktop-nav" role="menubar">
+      <li nz-menu-item [routerLink]="['/converter']" routerLinkActive="ant-menu-item-selected" role="menuitem">
+        <span nz-icon nzType="swap" nzTheme="outline"></span>
+        Converter
+      </li>
+      <li nz-menu-item [routerLink]="['/resizer']" routerLinkActive="ant-menu-item-selected" role="menuitem">
+        <span nz-icon nzType="column-width" nzTheme="outline"></span>
+        Resizer
+      </li>
+      <li nz-menu-item [routerLink]="['/batch']" routerLinkActive="ant-menu-item-selected" role="menuitem">
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
+        Batch Processor
+      </li>
+    </ul>
+
+    <div class="header-controls">
+      <button nz-button nzType="text" (click)="toggleTheme()" class="theme-toggle" aria-label="Toggle theme">
+        <span nz-icon [nzType]="themeService.isDarkMode() ? 'sun' : 'moon'" nzTheme="outline"></span>
+      </button>
+
+      <div class="desktop-settings">
+        <app-settings-panel></app-settings-panel>
+      </div>
+    </div>
+  </div>
+</nz-header>
+
+<nz-drawer [nzVisible]="isDrawerOpen" nzPlacement="left" nzTitle="ImageFlexer" [nzWidth]="280"
+  (nzOnClose)="closeDrawer()" class="mobile-drawer">
+  <ng-container *nzDrawerContent>
+    <ul nz-menu nzMode="inline" (click)="closeDrawer()" class="mobile-nav">
       <li nz-menu-item [routerLink]="['/converter']" routerLinkActive="ant-menu-item-selected">
         <span nz-icon nzType="swap" nzTheme="outline"></span>
         Converter
@@ -22,12 +57,12 @@
       </li>
     </ul>
 
-    <div class="header-controls">
-      <button nz-button nzType="text" (click)="toggleTheme()" class="theme-toggle">
+    <div class="drawer-actions">
+      <button nz-button nzBlock nzType="default" (click)="toggleTheme()" aria-label="Toggle theme">
         <span nz-icon [nzType]="themeService.isDarkMode() ? 'sun' : 'moon'" nzTheme="outline"></span>
+        Toggle Theme
       </button>
-
       <app-settings-panel></app-settings-panel>
     </div>
-  </div>
-</nz-header>
+  </ng-container>
+</nz-drawer>
