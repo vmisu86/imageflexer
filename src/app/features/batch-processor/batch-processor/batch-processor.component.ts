@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../../../core/services/image.service';
-import { ImageConfig } from '../../../core/models/image-config.model';
+import { BatchSummary, ImageConfig, ProcessProgress } from '../../../core/models/image-config.model';
 import { StorageService } from '../../../core/services/storage.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -12,6 +12,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class BatchProcessorComponent implements OnInit {
   isProcessing = false;
+  progress: ProcessProgress = { current: 0, total: 0 };
+  summary: BatchSummary | null = null;
 
   config: ImageConfig = {
     format: 'image/webp',
@@ -49,6 +51,9 @@ export class BatchProcessorComponent implements OnInit {
     this.imageService.processing$.subscribe(isProcessing => {
       this.isProcessing = isProcessing;
     });
+    this.imageService.progress$.subscribe(progress => {
+      this.progress = progress;
+    });
   }
 
   async processImages(files: File[]): Promise<void> {
@@ -73,6 +78,7 @@ export class BatchProcessorComponent implements OnInit {
 
     try {
       const { processed, failed } = await this.imageService.processBatch(files, processingConfig);
+      this.summary = { processed: processed.length, failed: failed.length };
 
       if (processed.length) {
         this.message.success(`Processed ${processed.length} image(s)`);
@@ -98,6 +104,7 @@ export class BatchProcessorComponent implements OnInit {
   }
 
   clearResults(): void {
+    this.summary = null;
     this.imageService.clearProcessedImages();
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BatchResult, ImageConfig, ProcessFailure, ProcessedImage } from '../models/image-config.model';
+import { BatchResult, ImageConfig, ProcessFailure, ProcessProgress, ProcessedImage } from '../models/image-config.model';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -12,6 +12,8 @@ export class ImageService {
 
     private processingSubject = new BehaviorSubject<boolean>(false);
     public processing$ = this.processingSubject.asObservable();
+    private progressSubject = new BehaviorSubject<ProcessProgress>({ current: 0, total: 0 });
+    public progress$ = this.progressSubject.asObservable();
 
     constructor(private storageService: StorageService) {
         // Load any saved images from storage
@@ -62,9 +64,11 @@ export class ImageService {
         this.processingSubject.next(true);
         const results: ProcessedImage[] = [];
         const failures: ProcessFailure[] = [];
+        this.progressSubject.next({ current: 0, total: files.length });
 
         try {
-            for (const file of files) {
+            for (let index = 0; index < files.length; index++) {
+                const file = files[index];
                 try {
                     const result = await this.processImage(file, config);
                     results.push(result);
@@ -73,6 +77,7 @@ export class ImageService {
                     failures.push({ file, error: message });
                     console.error(`Error processing ${file.name}:`, error);
                 }
+                this.progressSubject.next({ current: index + 1, total: files.length });
             }
 
             // Update the BehaviorSubject with new results
@@ -88,6 +93,7 @@ export class ImageService {
             return { processed: results, failed: failures };
         } finally {
             this.processingSubject.next(false);
+            this.progressSubject.next({ current: 0, total: 0 });
         }
     }
 

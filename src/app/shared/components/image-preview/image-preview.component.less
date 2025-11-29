@@ -10,14 +10,33 @@
   align-items: center;
   margin-bottom: 16px;
 
-  h2 {
-    margin-bottom: 0;
+  .title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    .summary-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
   }
 }
 
 .preview-actions {
   display: flex;
   gap: 8px;
+  align-items: center;
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
 }
 
 .no-images {
@@ -42,6 +61,34 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
+}
+
+.image-list {
+  margin-top: 8px;
+
+  .list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .list-main {
+    .name {
+      font-weight: 500;
+    }
+    .meta {
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
+
+  .list-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 }
 
 .image-card {

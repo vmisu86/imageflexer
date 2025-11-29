@@ -26,3 +26,13 @@ export interface BatchResult {
     processed: ProcessedImage[];
     failed: ProcessFailure[];
 }
+
+export interface ProcessProgress {
+    current: number;
+    total: number;
+}
+
+export interface BatchSummary {
+    processed: number;
+    failed: number;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../../../core/services/image.service';
-import { ImageConfig } from '../../../core/models/image-config.model';
+import { BatchSummary, ImageConfig, ProcessProgress } from '../../../core/models/image-config.model';
 import { StorageService } from '../../../core/services/storage.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -12,6 +12,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ResizerComponent implements OnInit {
   isProcessing = false;
+  progress: ProcessProgress = { current: 0, total: 0 };
+  summary: BatchSummary | null = null;
 
   config: ImageConfig = {
     maxWidth: 1200,
@@ -45,6 +47,9 @@ export class ResizerComponent implements OnInit {
     this.imageService.processing$.subscribe(isProcessing => {
       this.isProcessing = isProcessing;
     });
+    this.imageService.progress$.subscribe(progress => {
+      this.progress = progress;
+    });
   }
 
   async processImages(files: File[]): Promise<void> {
@@ -55,6 +60,7 @@ export class ResizerComponent implements OnInit {
 
     try {
       const { processed, failed } = await this.imageService.processBatch(files, this.config);
+      this.summary = { processed: processed.length, failed: failed.length };
 
       if (processed.length) {
         this.message.success(`Resized ${processed.length} image(s)`);
@@ -87,6 +93,7 @@ export class ResizerComponent implements OnInit {
   }
 
   clearResults(): void {
+    this.summary = null;
     this.imageService.clearProcessedImages();
   }
 }

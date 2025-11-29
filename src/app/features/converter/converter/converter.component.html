@@ -14,7 +14,10 @@
                 <nz-tag [nzColor]="isProcessing ? 'processing' : 'success'">
                     {{ isProcessing ? 'Processing…' : 'Ready' }}
                 </nz-tag>
-                <span class="status-hint" *ngIf="isProcessing">Working on your files</span>
+                <span class="status-hint" *ngIf="isProcessing && progress.total > 0">
+                    Processing {{ progress.current }} / {{ progress.total }}
+                </span>
+                <span class="status-hint" *ngIf="isProcessing && progress.total === 0">Working on your files</span>
                 <span class="status-hint" *ngIf="!isProcessing">Drop files or click select</span>
             </div>
         </div>
@@ -42,7 +45,7 @@
         </app-file-dropzone>
     </nz-card>
 
-    <app-image-preview [images]="imageService.getProcessedImages()" [showComparison]="true"
+    <app-image-preview [images]="imageService.getProcessedImages()" [showComparison]="true" [summary]="summary"
         (download)="downloadImage($event)" (downloadAll)="downloadAll()" (clear)="clearResults()">
     </app-image-preview>
 </div>

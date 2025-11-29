@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../../../core/services/image.service';
-import { ImageConfig } from '../../../core/models/image-config.model';
+import { BatchSummary, ImageConfig, ProcessProgress } from '../../../core/models/image-config.model';
 import { StorageService } from '../../../core/services/storage.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -12,6 +12,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ConverterComponent implements OnInit {
   isProcessing = false;
+  progress: ProcessProgress = { current: 0, total: 0 };
+  summary: BatchSummary | null = null;
 
   config: ImageConfig = {
     format: 'image/webp',
@@ -41,6 +43,9 @@ export class ConverterComponent implements OnInit {
     this.imageService.processing$.subscribe(isProcessing => {
       this.isProcessing = isProcessing;
     });
+    this.imageService.progress$.subscribe(progress => {
+      this.progress = progress;
+    });
   }
 
   async processImages(files: File[]): Promise<void> {
@@ -51,6 +56,7 @@ export class ConverterComponent implements OnInit {
 
     try {
       const { processed, failed } = await this.imageService.processBatch(files, this.config);
+      this.summary = { processed: processed.length, failed: failed.length };
 
       if (processed.length) {
         this.message.success(`Converted ${processed.length} image(s)`);
@@ -76,6 +82,7 @@ export class ConverterComponent implements OnInit {
   }
 
   clearResults(): void {
+    this.summary = null;
     this.imageService.clearProcessedImages();
   }
 }
