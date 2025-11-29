@@ -1,59 +1,37 @@
 # Imageflexer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+Browser-based image utility for converting, resizing, and batch-processing pictures with instant previews and client-side downloads. Built with Angular 19 and Ng Zorro.
 
-## Development server
+## Features
+- Convert between JPG/PNG/WebP/AVIF with adjustable quality.
+- Resize with presets or custom dimensions; optional aspect ratio preservation.
+- Batch mode to mix resize/convert operations and zip all results.
+- Drag-and-drop upload with file-type/size validation and inline previews.
+- Download singles or all-as-zip; remembers processed images and user settings (optional).
+- Light/dark themes with system-preference support.
 
-To start a local development server, run:
+## Tech Stack
+- Angular 19, TypeScript, Ng Zorro (Ant Design), LESS, JSZip, RxJS.
 
-```bash
-ng serve
-```
+## Getting Started
+1) Install dependencies: `npm install`
+2) Run the dev server: `npm start` then open `http://localhost:4200/`
+3) Production build: `npm run build:prod`
+4) Tests (Karma/Jasmine): `npm test`
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Usage
+- Pick a tool from the header (Converter, Resizer, Batch Processor).
+- Drop or select images in the dropzone; adjust format/quality or dimensions as needed.
+- Click the action button to process; use the preview list to download individual files or “Download All” to get a zip.
+- Open the settings panel (gear icon) to change defaults (format, quality, max upload size, history), toggle dark mode, or clear saved data.
 
-## Code scaffolding
+## Project Structure (high level)
+- `src/app/core` – services (image processing, storage, theme) and models for settings/config.
+- `src/app/shared` – reusable components (file dropzone, image preview, settings panel), directives, pipes, and Ng Zorro exports.
+- `src/app/features` – lazy-loaded Converter, Resizer, and Batch Processor modules/components.
+- `src/app/layout` – header/sidebar/footer shell and navigation.
+- `src/assets/styles` – LESS variables, mixins, and light/dark theme definitions.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Notes
+- Processing happens entirely in the browser via the Canvas API; very large images may hit memory limits despite the 50 MB default upload cap.
+- Processed images and settings are stored in `localStorage`; clear them from the settings panel if needed.
