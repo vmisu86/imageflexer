@@ -72,8 +72,17 @@ export class BatchProcessorComponent implements OnInit {
     }
 
     try {
-      await this.imageService.processBatch(files, processingConfig);
-      this.message.success(`Successfully processed ${files.length} image(s)`);
+      const { processed, failed } = await this.imageService.processBatch(files, processingConfig);
+
+      if (processed.length) {
+        this.message.success(`Processed ${processed.length} image(s)`);
+      }
+
+      if (failed.length) {
+        const failedNames = failed.map(item => item.file.name).join(', ');
+        const prefix = processed.length ? 'Some files could not be processed' : 'Processing failed';
+        this.message.warning(`${prefix}: ${failedNames}`);
+      }
     } catch (error) {
       console.error('Error processing images:', error);
       this.message.error('An error occurred while processing images');

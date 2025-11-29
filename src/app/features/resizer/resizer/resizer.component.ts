@@ -54,8 +54,17 @@ export class ResizerComponent implements OnInit {
     }
 
     try {
-      await this.imageService.processBatch(files, this.config);
-      this.message.success(`Successfully resized ${files.length} image(s)`);
+      const { processed, failed } = await this.imageService.processBatch(files, this.config);
+
+      if (processed.length) {
+        this.message.success(`Resized ${processed.length} image(s)`);
+      }
+
+      if (failed.length) {
+        const failedNames = failed.map(item => item.file.name).join(', ');
+        const prefix = processed.length ? 'Some files could not be processed' : 'Resize failed';
+        this.message.warning(`${prefix}: ${failedNames}`);
+      }
     } catch (error) {
       console.error('Error processing images:', error);
       this.message.error('An error occurred while resizing images');

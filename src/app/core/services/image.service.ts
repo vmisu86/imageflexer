@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ImageConfig, ProcessedImage } from '../models/image-config.model';
+import { BatchResult, ImageConfig, ProcessFailure, ProcessedImage } from '../models/image-config.model';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -58,9 +58,10 @@ export class ImageService {
     /**
      * Process multiple image files in batch
      */
-    async processBatch(files: File[], config: ImageConfig): Promise<ProcessedImage[]> {
+    async processBatch(files: File[], config: ImageConfig): Promise<BatchResult> {
         this.processingSubject.next(true);
         const results: ProcessedImage[] = [];
+        const failures: ProcessFailure[] = [];
 
         try {
             for (const file of files) {
@@ -68,19 +69,23 @@ export class ImageService {
                     const result = await this.processImage(file, config);
                     results.push(result);
                 } catch (error) {
+                    const message = error instanceof Error ? error.message : 'Unknown processing error';
+                    failures.push({ file, error: message });
                     console.error(`Error processing ${file.name}:`, error);
                 }
             }
 
             // Update the BehaviorSubject with new results
-            const currentImages = this.processedImagesSubject.value;
-            const updatedImages = [...currentImages, ...results];
-            this.processedImagesSubject.next(updatedImages);
+            if (results.length) {
+                const currentImages = this.processedImagesSubject.value;
+                const updatedImages = [...currentImages, ...results];
+                this.processedImagesSubject.next(updatedImages);
 
-            // Save to storage if enabled
-            this.storageService.setItem('processedImages', updatedImages);
+                // Save to storage if enabled
+                this.storageService.setItem('processedImages', updatedImages);
+            }
 
-            return results;
+            return { processed: results, failed: failures };
         } finally {
             this.processingSubject.next(false);
         }

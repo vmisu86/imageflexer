@@ -25,7 +25,7 @@
             (click)="selectImage(image)">
 
             <div class="image-container">
-                <img [src]="image.dataUrl" [alt]="image.file.name">
+                <img [src]="image.dataUrl" [alt]="image.file.name" loading="lazy" decoding="async">
 
                 <div *ngIf="getSavingPercentage(image) > 0" class="saving-badge">
                     -{{ getSavingPercentage(image) | number:'1.0-0' }}%
@@ -64,7 +64,7 @@
         <ng-container *nzModalContent>
             <div *ngIf="selectedImage" class="image-details">
                 <div class="image-large-preview">
-                    <img [src]="selectedImage.dataUrl" [alt]="selectedImage.file.name">
+                    <img [src]="selectedImage.dataUrl" [alt]="selectedImage.file.name" loading="lazy" decoding="async">
                 </div>
 
                 <div class="image-metadata">

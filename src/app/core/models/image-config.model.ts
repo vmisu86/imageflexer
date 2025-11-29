@@ -16,3 +16,13 @@ export interface ProcessedImage {
     height: number;
     format: string;
 }
+
+export interface ProcessFailure {
+    file: File;
+    error: string;
+}
+
+export interface BatchResult {
+    processed: ProcessedImage[];
+    failed: ProcessFailure[];
+}
